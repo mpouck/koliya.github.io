@@ -1,0 +1,2636 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Maison Dorée — Premium Restaurant</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --dark: #0E0E0E;
+    --dark-2: #1A1A1A;
+    --dark-3: #242424;
+    --white: #FAFAF8;
+    --gray: #9A9A8E;
+    --card-bg: #FFFFFF;
+    --search-bg: #F2F2EE;
+  }
+  body.night-mode {
+    --white: #121212;
+    --gray: #7A7A70;
+    --search-bg: #2A2A2A;
+  }
+  body.night-mode .white-section { background: #121212; }
+  body.night-mode .card { background: #1E1E1E; box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
+  body.night-mode .card-name, body.night-mode .card-price { color: #FAFAF8; }
+  body.night-mode .search-input { background: #2A2A2A; color: #7A7A70; }
+  body.night-mode .filter-btn { background: #2A2A2A; }
+  body.night-mode .filter-btn svg { stroke: #FAFAF8; }
+  body.night-mode .bottom-nav { background: #1A1A1A; border-top-color: #2A2A2A; }
+  body.night-mode .section-title { color: #FAFAF8; }
+  body.night-mode .btn-commander { background: #FAFAF8; color: #0E0E0E; }
+  body.night-mode .special-card { background: #1E1E1E; }
+  body.night-mode .special-name { color: #FAFAF8; }
+  body.night-mode .filter-modal { background: #1E1E1E; }
+  body.night-mode .filter-modal h3 { color: #FAFAF8; }
+  body.night-mode .filter-tag { background: #2A2A2A; color: #FAFAF8; border-color: #3A3A3A; }
+  body.night-mode .modal-overlay { background: rgba(0,0,0,0.7); }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--dark);
+    max-width: 420px;
+    margin: 0 auto;
+    position: relative;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--dark);
+    position: relative;
+    overflow: hidden;
+    min-height: 340px;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80') center/cover no-repeat;
+    opacity: 0.45;
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(14,14,14,0.85) 40%, rgba(14,14,14,0.3) 100%);
+  }
+  .hero-nav {
+    position: relative; z-index: 2;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 20px 0;
+  }
+  .hamburger { display: flex; flex-direction: column; gap: 4px; cursor: pointer; padding: 8px; border-radius: 8px; transition: background 0.2s; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; transition: background 0.2s; }
+  body.night-mode .hamburger { background: rgba(255,255,255,0.12); }
+  body.night-mode .hamburger span { background: #FAFAF8; }
+  .hero-search {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    padding: 8px 16px;
+    display: flex; align-items: center; gap: 8px;
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    width: 200px;
+  }
+  .hero-search svg { width: 14px; height: 14px; stroke: rgba(255,255,255,0.7); fill: none; flex-shrink: 0; }
+  .theme-toggle {
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    transition: background 0.2s;
+  }
+  .theme-toggle:hover { background: rgba(255,255,255,0.25); }
+  .theme-toggle svg { width: 18px; height: 18px; stroke: white; fill: none; }
+
+  .hero-icon-btn { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; }
+  .hero-icon-btn svg { width: 20px; height: 20px; stroke: white; fill: none; }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 24px 20px 20px;
+  }
+  .hero-tag {
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    line-height: 1.0;
+    color: white;
+    margin-bottom: 10px;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-light);
+    display: block;
+  }
+  .hero-subtitle {
+    color: rgba(255,255,255,0.55);
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 200px;
+    margin-bottom: 20px;
+  }
+  .hero-more {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 2;
+    width: 40px; height: 40px;
+    background: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  }
+
+  /* ── WHITE SECTION ── */
+  .white-section {
+    background: var(--white);
+    border-radius: 28px 28px 0 0;
+    margin-top: -24px;
+    position: relative;
+    z-index: 3;
+    padding: 24px 20px 120px;
+  }
+
+  /* ── SEARCH BAR ── */
+  .search-row {
+    display: flex; gap: 10px; align-items: center;
+    margin-bottom: 24px;
+  }
+  .search-input {
+    flex: 1;
+    background: var(--search-bg);
+    border-radius: 50px;
+    padding: 12px 16px;
+    display: flex; align-items: center; gap: 10px;
+    color: var(--gray);
+    font-size: 13px;
+    transition: background 0.3s;
+  }
+  .search-input input {
+    border: none; background: transparent; outline: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; color: var(--dark);
+    width: 100%;
+  }
+  .search-input input::placeholder { color: var(--gray); }
+  body.night-mode .search-input input { color: #FAFAF8; }
+  .search-input svg { width: 16px; height: 16px; stroke: var(--gray); fill: none; flex-shrink: 0; }
+  .filter-btn {
+    width: 44px; height: 44px;
+    background: var(--search-bg);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .filter-btn:hover { background: var(--gold); }
+  .filter-btn:hover svg { stroke: white; }
+  .filter-btn svg { width: 18px; height: 18px; stroke: var(--dark); fill: none; transition: stroke 0.2s; }
+
+  /* ── FILTER MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    align-items: flex-end;
+  }
+  .modal-overlay.open { display: flex; }
+  .filter-modal {
+    background: white;
+    border-radius: 28px 28px 0 0;
+    padding: 24px 20px 40px;
+    width: 100%; max-width: 420px;
+    margin: 0 auto;
+    animation: slideUp 0.3s ease;
+  }
+  .filter-modal h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .filter-section-label {
+    font-size: 11px; font-weight: 500;
+    color: var(--gray); letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+  .filter-tags {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 20px;
+  }
+  .filter-tag {
+    padding: 7px 14px;
+    border-radius: 50px;
+    border: 1.5px solid #E8E8E4;
+    font-size: 12px; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-tag.active { background: var(--dark); color: white; border-color: var(--dark); }
+  .filter-tag:hover:not(.active) { border-color: var(--gold); color: var(--gold); }
+  .filter-apply {
+    width: 100%; padding: 14px;
+    background: var(--dark); color: white;
+    border: none; border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 500;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .filter-apply:hover { background: var(--gold); color: var(--dark); }
+
+  /* ── MENU SECTION ── */
+  .section-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 600;
+  }
+  .tabs {
+    display: flex; gap: 16px; align-items: center;
+  }
+  .tab {
+    font-size: 12px;
+    color: var(--gray);
+    cursor: pointer;
+    padding-bottom: 2px;
+    transition: color 0.2s;
+    white-space: nowrap;
+  }
+  .tab.active {
+    color: var(--dark);
+    font-weight: 500;
+    border-bottom: 1.5px solid var(--gold);
+  }
+
+  /* ── CARDS SCROLL ── */
+  .cards-scroll {
+    display: flex; gap: 14px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+    margin-bottom: 28px;
+  }
+  .cards-scroll::-webkit-scrollbar { display: none; }
+
+  .card {
+    min-width: 160px;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.12); }
+  .card:active { transform: scale(0.97); }
+
+  .card-img {
+    width: 100%; height: 130px;
+    object-fit: cover;
+    display: block;
+    position: relative;
+  }
+  .card-img-wrap {
+    position: relative;
+    background: #e8e8e4;
+  }
+  .card-img-wrap img { width: 100%; height: 130px; object-fit: cover; display: block; }
+  .card-body { padding: 12px; }
+  .card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .card-sub {
+    font-size: 11px;
+    color: var(--gray);
+    margin-bottom: 8px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .card-price {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--dark);
+  }
+  .card-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    gap: 8px;
+  }
+  .btn-commander {
+    background: var(--dark);
+    color: white;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 50px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+    letter-spacing: 0.03em;
+  }
+  .btn-commander:hover { background: var(--gold); color: var(--dark); transform: scale(1.04); }
+
+  /* ── CHEF BANNER ── */
+  .chef-banner {
+    background: var(--dark);
+    border-radius: 20px;
+    padding: 16px;
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 28px;
+    animation: slideUp 0.6s ease 0.3s both;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .chef-avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid var(--gold);
+  }
+  .chef-info { flex: 1; }
+  .chef-meta {
+    font-size: 10px; color: var(--gold);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 2px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .chef-name {
+    color: white;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .chef-desc { font-size: 11px; color: rgba(255,255,255,0.4); }
+  .chef-time {
+    font-size: 10px; color: rgba(255,255,255,0.4);
+    text-align: right;
+    align-self: flex-start;
+    padding-top: 4px;
+    white-space: nowrap;
+  }
+  .chef-cta {
+    background: var(--gold);
+    color: var(--dark);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 50px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .chef-cta:hover { background: var(--gold-light); }
+
+  /* ── SPECIALS ── */
+  .specials-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .special-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .special-card:hover { transform: scale(1.02); }
+  .special-card img { width: 100%; height: 110px; object-fit: cover; display: block; }
+  .special-body { padding: 10px 12px 12px; }
+  .special-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px; font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .special-price {
+    font-size: 13px; font-weight: 500; color: var(--gold);
+  }
+  .special-link {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--dark);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 1px;
+    transition: color 0.2s;
+  }
+  .special-link:hover { color: var(--gold); }
+
+  /* ── BOTTOM NAV ── */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 420px;
+    background: white;
+    border-top: 1px solid #EFEFEB;
+    display: flex; justify-content: space-around; align-items: center;
+    padding: 12px 16px 20px;
+    z-index: 99;
+    box-shadow: 0 -8px 32px rgba(0,0,0,0.06);
+  }
+  .nav-item {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    cursor: pointer;
+    transition: color 0.2s;
+    color: var(--gray);
+    font-size: 10px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    transition: background 0.2s;
+  }
+  .nav-item:hover { background: #F5F5F1; }
+  .nav-item.active { color: var(--dark); }
+  .nav-item svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+  .nav-item.active svg { stroke: var(--dark); }
+  .nav-center {
+    width: 52px; height: 52px;
+    background: var(--dark);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    margin-top: -16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nav-center:hover { background: var(--dark-3); transform: scale(1.05) translateY(-2px); }
+  .nav-center svg { width: 22px; height: 22px; stroke: white; fill: none; stroke-width: 2; }
+
+  /* ── INNER PAGES ── */
+  .inner-page {
+    display: none;
+    position: fixed; inset: 0;
+    background: var(--white);
+    z-index: 50;
+    overflow-y: auto;
+    padding: 0 0 100px;
+    max-width: 420px;
+    margin: 0 auto;
+    animation: fadeUp 0.3s ease;
+  }
+  .inner-page.active { display: block; }
+  body.night-mode .inner-page { background: #121212; }
+
+  .page-header {
+    display: flex; align-items: center; gap: 14px;
+    padding: 52px 20px 20px;
+    position: sticky; top: 0;
+    background: var(--white);
+    z-index: 2;
+    border-bottom: 1px solid #EFEFEB;
+  }
+  body.night-mode .page-header { background: #121212; border-bottom-color: #2A2A2A; }
+  .page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 600;
+    flex: 1;
+  }
+  body.night-mode .page-title { color: #FAFAF8; }
+
+  /* Fav button on cards */
+  .card-fav {
+    position: absolute; top: 8px; right: 8px;
+    width: 30px; height: 30px;
+    background: rgba(255,255,255,0.92);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s, background 0.2s;
+    z-index: 2;
+  }
+  .card-fav:hover { transform: scale(1.1); }
+  .card-fav svg { width: 14px; height: 14px; stroke: #aaa; fill: none; stroke-width: 2; transition: all 0.2s; }
+  .card-fav.active svg { stroke: #e74c3c; fill: #e74c3c; }
+
+  /* Commandes list */
+  .orders-list { padding: 16px 20px; }
+  .order-item {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 14px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  body.night-mode .order-item { background: #1E1E1E; }
+  .order-img { width: 60px; height: 60px; border-radius: 12px; object-fit: cover; flex-shrink: 0; }
+  .order-info { flex: 1; }
+  .order-name { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 600; }
+  body.night-mode .order-name { color: #FAFAF8; }
+  .order-meta { font-size: 11px; color: var(--gray); margin-top: 2px; }
+  .order-price { font-size: 13px; font-weight: 600; color: var(--gold); white-space: nowrap; }
+  .order-status {
+    font-size: 10px; font-weight: 500;
+    padding: 3px 8px; border-radius: 50px;
+    margin-top: 4px; display: inline-block;
+  }
+  .order-status.pending { background: #FFF3CD; color: #856404; }
+  .order-status.done { background: #D1FAE5; color: #065F46; }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center; padding: 60px 20px;
+    color: var(--gray);
+  }
+  .empty-state svg { width: 48px; height: 48px; stroke: #DDD; margin-bottom: 16px; }
+  .empty-state p { font-size: 14px; }
+
+  /* Favoris grid */
+  .fav-grid { padding: 16px 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .fav-card {
+    background: var(--card-bg);
+    border-radius: 16px; overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    cursor: pointer;
+  }
+  body.night-mode .fav-card { background: #1E1E1E; }
+  .fav-card img { width: 100%; height: 100px; object-fit: cover; display: block; }
+  .fav-card-body { padding: 10px 12px; }
+  .fav-card-name { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  body.night-mode .fav-card-name { color: #FAFAF8; }
+  .fav-card-price { font-size: 12px; color: var(--gold); font-weight: 500; margin-top: 2px; }
+  .fav-card-wrap { position: relative; }
+  .fav-remove-btn {
+    position: absolute; top: 8px; right: 8px;
+    width: 28px; height: 28px;
+    background: rgba(255,255,255,0.92);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .fav-remove-btn:hover { background: #fee2e2; transform: scale(1.15); }
+  .fav-remove-btn svg { width: 13px; height: 13px; stroke: #e74c3c; fill: #e74c3c; }
+  .fav-card.removing { animation: favPop 0.3s ease forwards; }
+  @keyframes favPop {
+    0%   { opacity: 1; transform: scale(1); }
+    50%  { opacity: 0.5; transform: scale(0.92); }
+    100% { opacity: 0; transform: scale(0.85); }
+  }
+
+  /* Badge sur l'icône commandes */
+  .nav-badge {
+    display: none;
+    position: absolute; top: 2px; right: 8px;
+    width: 16px; height: 16px;
+    background: var(--gold); color: white;
+    border-radius: 50%; font-size: 9px; font-weight: 700;
+    align-items: center; justify-content: center;
+  }
+  .nav-badge.show { display: flex; }
+  .nav-item { position: relative; }
+  .hero-content { animation: fadeIn 0.8s ease; }
+  .white-section > * { animation: fadeUp 0.5s ease both; }
+  .white-section > *:nth-child(1) { animation-delay: 0.05s; }
+  .white-section > *:nth-child(2) { animation-delay: 0.1s; }
+  .white-section > *:nth-child(3) { animation-delay: 0.15s; }
+  .white-section > *:nth-child(4) { animation-delay: 0.2s; }
+  .white-section > *:nth-child(5) { animation-delay: 0.25s; }
+  /* ── PAGE COMMANDE ── */
+  .order-page {
+    position: fixed;
+    inset: 0;
+    max-width: 420px;
+    margin: 0 auto;
+    background: var(--white);
+    z-index: 500;
+    transform: translateY(100%);
+    transition: transform 0.45s cubic-bezier(0.32, 0.72, 0, 1);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .order-page.open { transform: translateY(0); }
+
+  .order-hero {
+    position: relative;
+    height: 300px;
+    overflow: hidden;
+  }
+  .order-hero img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .order-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 60%);
+  }
+  .order-back {
+    position: absolute; top: 18px; left: 18px;
+    width: 40px; height: 40px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(8px);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.3);
+    transition: background 0.2s;
+    z-index: 2;
+  }
+  .order-back:hover { background: rgba(255,255,255,0.35); }
+  .order-back svg { width: 18px; height: 18px; stroke: white; fill: none; }
+  .order-hero-badge {
+    position: absolute; top: 18px; right: 18px;
+    background: var(--gold);
+    color: var(--dark);
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 50px;
+    z-index: 2;
+  }
+  .order-hero-title {
+    position: absolute; bottom: 20px; left: 20px; right: 20px;
+    z-index: 2;
+  }
+  .order-hero-title h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 34px; font-weight: 600;
+    color: white; line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .order-hero-title p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .order-body {
+    padding: 24px 20px 140px;
+  }
+
+  /* Rating row */
+  .order-meta-row {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 20px;
+  }
+  .order-rating {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 13px; font-weight: 500;
+  }
+  .stars { color: var(--gold); font-size: 12px; letter-spacing: 1px; }
+  .order-tag-pill {
+    background: #F2F2EE;
+    font-size: 11px; color: var(--gray);
+    padding: 4px 12px; border-radius: 50px;
+  }
+  body.night-mode .order-tag-pill { background: #2A2A2A; }
+  body.night-mode .order-body { color: #FAFAF8; }
+  body.night-mode .order-page { background: #121212; }
+  body.night-mode .order-section-title { color: #FAFAF8; }
+  body.night-mode .option-item { background: #1E1E1E; border-color: #2A2A2A; }
+  body.night-mode .option-item.selected { border-color: var(--gold); background: #2A2A2A; }
+  body.night-mode .option-label { color: #FAFAF8; }
+  body.night-mode .qty-btn { background: #2A2A2A; color: #FAFAF8; }
+  body.night-mode .note-input { background: #1E1E1E; color: #FAFAF8; border-color: #2A2A2A; }
+  body.night-mode .order-summary-bar { background: #1A1A1A; border-top-color: #2A2A2A; }
+  body.night-mode .summary-total { color: #FAFAF8; }
+
+  .order-description {
+    font-size: 13px; line-height: 1.7;
+    color: var(--gray); margin-bottom: 24px;
+  }
+
+  .order-section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  /* Options */
+  .options-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+  .option-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px;
+    border-radius: 16px;
+    border: 1.5px solid #EAEAE6;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+  }
+  .option-item:hover { border-color: var(--gold); }
+  .option-item.selected { border-color: var(--gold); background: #FFFBF0; }
+  .option-left { display: flex; align-items: center; gap: 12px; }
+  .option-check {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid #DEDED8;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; flex-shrink: 0;
+  }
+  .option-item.selected .option-check {
+    background: var(--gold); border-color: var(--gold);
+  }
+  .option-item.selected .option-check::after {
+    content: ''; display: block;
+    width: 8px; height: 8px;
+    background: white; border-radius: 50%;
+  }
+  .option-label { font-size: 14px; font-weight: 500; }
+  .option-desc { font-size: 11px; color: var(--gray); margin-top: 1px; }
+  .option-price { font-size: 13px; font-weight: 500; color: var(--gold); }
+
+  /* Quantité */
+  .qty-row {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 24px;
+  }
+  .qty-label { font-size: 14px; font-weight: 500; flex: 1; }
+  .qty-controls { display: flex; align-items: center; gap: 14px; }
+  .qty-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: #F2F2EE;
+    border: none; cursor: pointer;
+    font-size: 18px; font-weight: 300;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, transform 0.15s;
+    color: var(--dark);
+  }
+  .qty-btn:hover { background: var(--gold); color: white; transform: scale(1.05); }
+  .qty-value { font-size: 18px; font-weight: 600; min-width: 24px; text-align: center; }
+
+  /* Note */
+  .note-input {
+    width: 100%;
+    background: #F7F7F4;
+    border: 1.5px solid #EAEAE6;
+    border-radius: 16px;
+    padding: 14px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--dark);
+    resize: none;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 0;
+  }
+  .note-input:focus { border-color: var(--gold); }
+  .note-input::placeholder { color: var(--gray); }
+
+  /* Barre de commande bas */
+  .order-summary-bar {
+    position: fixed;
+    bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 420px;
+    background: white;
+    padding: 16px 20px 28px;
+    border-top: 1px solid #EFEFEB;
+    z-index: 501;
+    display: none;
+  }
+  .order-page.open ~ .order-summary-bar,
+  .order-summary-bar.visible { display: block; }
+  .summary-row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .summary-label { font-size: 12px; color: var(--gray); }
+  .summary-total { font-size: 22px; font-weight: 600; font-family: 'Cormorant Garamond', serif; }
+  .btn-confirm {
+    width: 100%;
+    background: var(--dark);
+    color: white;
+    border: none; border-radius: 50px;
+    padding: 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .btn-confirm:hover { background: var(--gold); color: var(--dark); transform: scale(1.01); }
+  .btn-confirm svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+
+  /* Confirmation toast */
+  .toast {
+    position: fixed;
+    bottom: 120px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--dark);
+    color: white;
+    padding: 14px 24px;
+    border-radius: 50px;
+    font-size: 13px; font-weight: 500;
+    opacity: 0;
+    transition: all 0.4s;
+    z-index: 600;
+    white-space: nowrap;
+    display: flex; align-items: center; gap: 8px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  /* ── SOUS-PAGES (Favoris / Commandes) ── */
+  .sub-page {
+    display: none;
+    position: fixed; inset: 0;
+    background: var(--white);
+    z-index: 50;
+    overflow-y: auto;
+    padding: 28px 20px 120px;
+    max-width: 420px;
+    margin: 0 auto;
+    animation: fadeUp 0.3s ease;
+  }
+  .sub-page.open { display: block; }
+  .sub-page-header { margin-bottom: 20px; }
+  .empty-state {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; padding: 60px 20px;
+    text-align: center; gap: 8px;
+  }
+  .empty-icon { font-size: 48px; margin-bottom: 8px; }
+  .empty-state p { font-size: 16px; font-weight: 500; color: var(--dark); }
+  .empty-state span { font-size: 13px; color: var(--gray); }
+
+  /* Carte favoris */
+  .fav-card {
+    display: flex; flex-direction: column;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .fav-card img { width: 100%; height: 110px; object-fit: cover; display: block; flex-shrink: 0; border-radius: 0; }
+  .fav-card-info { flex: 1; padding: 10px 12px; }
+  .fav-card-name { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .fav-card-price { font-size: 12px; color: var(--gold); font-weight: 500; margin-top: 2px; }
+  .fav-card-remove {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #FEF0F0; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .fav-card-remove:hover { background: #FDDEDE; }
+
+  /* Carte commande */
+  .order-card {
+    background: white;
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .order-card-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 8px;
+  }
+  .order-card-name { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600; }
+  .order-card-badge {
+    font-size: 10px; font-weight: 500; padding: 3px 10px;
+    border-radius: 50px; background: #EEFBF0; color: #27AE60;
+    letter-spacing: 0.05em;
+  }
+  .order-card-detail { font-size: 12px; color: var(--gray); margin-bottom: 4px; }
+  .order-card-total { font-size: 14px; font-weight: 600; color: var(--dark); }
+  .order-card-time { font-size: 11px; color: var(--gray); margin-top: 4px; }
+
+
+
+  body.night-mode .sub-page { background: #121212; }
+  body.night-mode .fav-card { background: #1E1E1E; }
+  body.night-mode .order-card { background: #1E1E1E; }
+  body.night-mode #cartFooter { background: #121212; border-top-color: #2A2A2A; }
+  body.night-mode #cartList .order-item button { color: #7A7A70; }
+  body.night-mode #sendPreview { color: #CCCCCC; background: #2A2A2A; }
+  body.night-mode #sendModal .filter-modal { background: #1E1E1E; }
+  body.night-mode #sendModal h3 { color: #FAFAF8; }
+  #sendModal { z-index: 600; }
+  body.night-mode .fav-card-name,
+  body.night-mode .order-card-name,
+  body.night-mode .order-card-total { color: #FAFAF8; }
+
+  /* ── PAGE CATÉGORIES ── */
+  .cat-hero {
+    background: var(--dark);
+    padding: 52px 20px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cat-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80') center/cover no-repeat;
+    opacity: 0.18;
+  }
+  .cat-hero-label {
+    position: relative; z-index: 1;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 6px;
+  }
+  .cat-hero-title {
+    position: relative; z-index: 1;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px; font-weight: 300; color: white;
+    line-height: 1.1; margin-bottom: 6px;
+  }
+  .cat-hero-title em { font-style: italic; color: var(--gold-light); }
+  .cat-hero-sub {
+    position: relative; z-index: 1;
+    font-size: 12px; color: rgba(255,255,255,0.5);
+  }
+
+  /* Filtres catégories */
+  .cat-filters {
+    display: flex; gap: 8px;
+    overflow-x: auto; scrollbar-width: none;
+    padding: 18px 20px 4px;
+  }
+  .cat-filters::-webkit-scrollbar { display: none; }
+  .cat-filter-pill {
+    flex-shrink: 0;
+    padding: 7px 16px;
+    border-radius: 50px;
+    border: 1.5px solid #E8E8E4;
+    font-size: 12px; font-weight: 500;
+    cursor: pointer; transition: all 0.2s;
+    background: transparent; color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    white-space: nowrap;
+  }
+  .cat-filter-pill.active { background: var(--dark); color: white; border-color: var(--dark); }
+  body.night-mode .cat-filter-pill { color: #FAFAF8; border-color: #3A3A3A; }
+  body.night-mode .cat-filter-pill.active { background: var(--gold); border-color: var(--gold); color: var(--dark); }
+
+  /* Section label */
+  .cat-section-label {
+    font-size: 11px; font-weight: 500;
+    color: var(--gray); letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 20px 20px 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .cat-section-label::after {
+    content: ''; flex: 1; height: 1px; background: #EFEFEB;
+  }
+  body.night-mode .cat-section-label::after { background: #2A2A2A; }
+
+  /* Grille plats catégories */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    padding: 0 20px;
+  }
+  .cat-card {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+  body.night-mode .cat-card { background: #1E1E1E; }
+  .cat-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.12); }
+  .cat-card img { width: 100%; height: 115px; object-fit: cover; display: block; }
+  .cat-card-body { padding: 10px 12px 12px; }
+  .cat-card-badge {
+    display: inline-block;
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 3px;
+  }
+  .cat-card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px; font-weight: 600;
+    margin-bottom: 4px; line-height: 1.2;
+  }
+  body.night-mode .cat-card-name { color: #FAFAF8; }
+  .cat-card-price { font-size: 12px; font-weight: 500; color: var(--dark); }
+  body.night-mode .cat-card-price { color: #FAFAF8; }
+  .cat-card-fav {
+    position: absolute; top: 8px; right: 8px;
+    width: 28px; height: 28px;
+    background: rgba(255,255,255,0.92);
+    border-radius: 50%; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s; z-index: 2;
+  }
+  .cat-card-fav svg { width: 13px; height: 13px; stroke: #aaa; fill: none; stroke-width: 2; transition: all 0.2s; }
+  .cat-card-fav.active svg { stroke: #e74c3c; fill: #e74c3c; }
+  .cat-card-fav:hover { transform: scale(1.1); }
+
+  /* Spécialité featured (grande carte) */
+  .cat-featured {
+    margin: 0 20px;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    transition: transform 0.2s;
+  }
+  .cat-featured:hover { transform: scale(1.01); }
+  .cat-featured img { width: 100%; height: 180px; object-fit: cover; display: block; }
+  .cat-featured-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.05) 55%);
+  }
+  .cat-featured-body {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 16px;
+  }
+  .cat-featured-badge {
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 4px;
+  }
+  .cat-featured-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 600; color: white;
+    margin-bottom: 6px;
+  }
+  .cat-featured-footer {
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .cat-featured-price { font-size: 14px; font-weight: 600; color: var(--gold-light); }
+  .cat-featured-btn {
+    font-size: 11px; font-weight: 500;
+    padding: 6px 14px; border-radius: 50px;
+    background: white; color: var(--dark);
+    border: none; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .cat-featured-btn:hover { background: var(--gold); color: var(--dark); }
+
+  /* ── DRAWER MENU (Hamburger) ── */
+  .drawer-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.55); z-index: 800;
+    backdrop-filter: blur(2px);
+  }
+  .drawer-overlay.open { display: block; }
+
+  .drawer {
+    position: fixed; top: 0; left: 0; bottom: 0;
+    width: 300px; max-width: 85vw;
+    background: var(--dark);
+    z-index: 900;
+    transform: translateX(-100%);
+    transition: transform 0.38s cubic-bezier(0.32,0.72,0,1);
+    overflow-y: auto;
+    display: flex; flex-direction: column;
+  }
+  .drawer.open { transform: translateX(0); }
+
+  .drawer-header {
+    padding: 56px 24px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    position: relative;
+  }
+  .drawer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 300; color: white;
+    line-height: 1;
+  }
+  .drawer-logo em { font-style: italic; color: var(--gold-light); display: block; }
+  .drawer-tagline { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 6px; }
+  .drawer-close {
+    position: absolute; top: 18px; right: 18px;
+    width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(255,255,255,0.08); border: none;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .drawer-close:hover { background: rgba(255,255,255,0.15); }
+  .drawer-close svg { stroke: white; width: 16px; height: 16px; fill: none; }
+
+  .drawer-nav { padding: 16px 0; flex: 1; }
+  .drawer-nav-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 24px; cursor: pointer;
+    color: rgba(255,255,255,0.7); font-size: 14px;
+    transition: background 0.2s, color 0.2s;
+    border-left: 2px solid transparent;
+  }
+  .drawer-nav-item:hover { background: rgba(255,255,255,0.05); color: white; border-left-color: var(--gold); }
+  .drawer-nav-item svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.8; flex-shrink: 0; }
+  .drawer-nav-item span { font-size: 10px; color: var(--gold); margin-left: auto; }
+
+  .drawer-section-label {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    padding: 16px 24px 6px;
+  }
+
+  .drawer-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 8px 24px; }
+
+  /* Infos contact dans le drawer */
+  .drawer-contact-card {
+    margin: 16px 20px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 18px;
+  }
+  .drawer-contact-row {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 12px;
+  }
+  .drawer-contact-row:last-child { margin-bottom: 0; }
+  .drawer-contact-icon {
+    width: 34px; height: 34px; border-radius: 10px;
+    background: rgba(201,168,76,0.15);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .drawer-contact-icon svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; }
+  .drawer-contact-label { font-size: 10px; color: rgba(255,255,255,0.35); margin-bottom: 1px; }
+  .drawer-contact-value { font-size: 13px; color: white; font-weight: 400; }
+
+  /* À propos */
+  .drawer-about {
+    margin: 0 20px 20px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px; padding: 18px;
+  }
+  .drawer-about-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 600; color: white;
+    margin-bottom: 8px;
+  }
+  .drawer-about-text { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.7; }
+  .drawer-about-stats {
+    display: flex; gap: 16px; margin-top: 14px;
+  }
+  .drawer-stat { text-align: center; flex: 1; }
+  .drawer-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 600; color: var(--gold);
+  }
+  .drawer-stat-label { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 1px; }
+
+  .drawer-footer {
+    padding: 16px 20px 32px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    text-align: center;
+    font-size: 11px; color: rgba(255,255,255,0.2);
+  }
+  .drawer-footer a { color: var(--gold); text-decoration: none; }
+
+  /* ════════════════════════════════════════════════════════
+     RESPONSIVE — TABLETTE (≥ 768px)
+  ════════════════════════════════════════════════════════ */
+  @media (min-width: 768px) {
+    html {
+      background: #0a0a0a;
+      background-image:
+        radial-gradient(ellipse at 20% 20%, rgba(201,168,76,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(201,168,76,0.05) 0%, transparent 50%);
+      min-height: 100vh;
+    }
+    body {
+      max-width: 480px;
+      margin: 32px auto;
+      border-radius: 32px;
+      overflow: hidden;
+      min-height: calc(100vh - 64px);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 32px 80px rgba(0,0,0,0.6), 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .bottom-nav { max-width: 480px; border-radius: 0 0 32px 32px; }
+    .inner-page { max-width: 480px; left: 50%; transform: translateX(-50%); border-radius: 32px; }
+    .order-page { max-width: 480px; left: 50%; transform: translateX(-50%) translateY(100%); border-radius: 32px; }
+    .order-page.open { transform: translateX(-50%) translateY(0); }
+    .filter-modal { max-width: 480px; border-radius: 28px 28px 0 0; }
+    .drawer { max-width: 300px; border-radius: 0 24px 24px 0; }
+    .specials-grid { gap: 16px; }
+    .fav-grid { gap: 16px; }
+    .hero { min-height: 380px; }
+    .card { min-width: 175px; }
+  }
+
+  /* ════════════════════════════════════════════════════════
+     RESPONSIVE — DESKTOP (≥ 1100px)
+  ════════════════════════════════════════════════════════ */
+  @media (min-width: 1100px) {
+    body { max-width: 420px; margin: 40px auto; }
+    body::before {
+      content: "Maison Doree";
+      position: fixed; left: calc(50% - 340px); top: 50%;
+      transform: translateY(-50%) rotate(-90deg); transform-origin: center;
+      font-family: "Cormorant Garamond", serif; font-size: 13px; font-weight: 300;
+      letter-spacing: 0.3em; color: rgba(201,168,76,0.35);
+      text-transform: uppercase; white-space: nowrap; pointer-events: none;
+    }
+    body::after {
+      content: "Restaurant Premium";
+      position: fixed; right: calc(50% - 340px); top: 50%;
+      transform: translateY(-50%) rotate(90deg); transform-origin: center;
+      font-family: "DM Sans", sans-serif; font-size: 11px; font-weight: 300;
+      letter-spacing: 0.25em; color: rgba(255,255,255,0.12);
+      text-transform: uppercase; white-space: nowrap; pointer-events: none;
+    }
+    .bottom-nav { max-width: 420px; border-radius: 0 0 32px 32px; }
+    .inner-page { max-width: 420px; border-radius: 32px; }
+    .order-page { max-width: 420px; border-radius: 32px; }
+    .filter-modal { max-width: 420px; }
+    .inner-page::-webkit-scrollbar { width: 4px; }
+    .inner-page::-webkit-scrollbar-track { background: transparent; }
+    .inner-page::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 4px; }
+  }
+
+</style>
+</head>
+<body>
+
+
+
+<!-- DRAWER OVERLAY -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+
+<!-- DRAWER MENU -->
+<div class="drawer" id="drawer">
+
+  <div class="drawer-header">
+    <button class="drawer-close" onclick="closeDrawer()">
+      <svg viewBox="0 0 24 24" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="drawer-logo">Maison<em>Dorée</em></div>
+    <div class="drawer-tagline">✦ Gastronomie Premium · Brazzaville</div>
+  </div>
+
+  <div class="drawer-nav">
+    <div class="drawer-section-label">Navigation</div>
+    <div class="drawer-nav-item" onclick="closeDrawer()">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+      Accueil
+    </div>
+    <div class="drawer-nav-item" onclick="closeDrawer(); openPage('categories'); document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active')); document.querySelector('[data-page=categories]').classList.add('active')">
+      <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      Catégories & Spécialités
+    </div>
+    <div class="drawer-nav-item" onclick="closeDrawer(); openPage('favoris'); document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active')); document.querySelector('[data-page=favoris]').classList.add('active')">
+      <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      Mes Favoris
+    </div>
+    <div class="drawer-nav-item" onclick="closeDrawer(); openPage('commandes'); document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active')); document.querySelector('[data-page=commandes]').classList.add('active')">
+      <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      Mes Commandes
+    </div>
+    <div class="drawer-nav-item" onclick="closeDrawer(); openPage('panier')">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      Mon Panier
+    </div>
+
+    <div class="drawer-divider"></div>
+    <div class="drawer-section-label">Informations</div>
+
+    <!-- Horaires -->
+    <div class="drawer-nav-item">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Horaires d'ouverture
+      <span>7j/7</span>
+    </div>
+    <div style="padding:0 24px 12px;font-size:12px;color:rgba(255,255,255,0.35);line-height:1.8">
+      Lun – Ven : 11h00 – 23h00<br>
+      Sam – Dim : 10h00 – 00h00
+    </div>
+
+  </div>
+
+  <!-- Contact -->
+  <div class="drawer-section-label" style="padding-left:20px">Contact</div>
+  <div class="drawer-contact-card">
+    <div class="drawer-contact-row">
+      <div class="drawer-contact-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.58a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </div>
+      <div>
+        <div class="drawer-contact-label">WhatsApp / Téléphone</div>
+        <div class="drawer-contact-value">+242 068 652 120</div>
+      </div>
+    </div>
+    <div class="drawer-contact-row">
+      <div class="drawer-contact-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <div>
+        <div class="drawer-contact-label">Email</div>
+        <div class="drawer-contact-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="335e435c465058525555525a41564073545e525a5f1d505c5e">[email&#160;protected]</a></div>
+      </div>
+    </div>
+    <div class="drawer-contact-row">
+      <div class="drawer-contact-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <div>
+        <div class="drawer-contact-label">Adresse</div>
+        <div class="drawer-contact-value">Brazzaville, Congo</div>
+      </div>
+    </div>
+    <div class="drawer-contact-row" style="margin-bottom:0">
+      <div class="drawer-contact-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+      </div>
+      <div>
+        <div class="drawer-contact-label">Réseaux sociaux</div>
+        <div class="drawer-contact-value">@maisondoree_bzv</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- À propos -->
+  <div class="drawer-section-label" style="padding-left:20px">À propos</div>
+  <div class="drawer-about">
+    <div class="drawer-about-title">Notre histoire</div>
+    <div class="drawer-about-text">
+      Maison Dorée est un restaurant gastronomique premium fondé à Brazzaville, alliant la tradition culinaire française à l'art de vivre africain. Chaque plat est une création unique, pensée par le Chef Antoine Diallo pour offrir une expérience sensorielle inoubliable.
+    </div>
+    <div class="drawer-about-stats">
+      <div class="drawer-stat">
+        <div class="drawer-stat-num">12+</div>
+        <div class="drawer-stat-label">Années</div>
+      </div>
+      <div class="drawer-stat">
+        <div class="drawer-stat-num">48</div>
+        <div class="drawer-stat-label">Plats</div>
+      </div>
+      <div class="drawer-stat">
+        <div class="drawer-stat-num">4.9★</div>
+        <div class="drawer-stat-label">Note</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="drawer-footer">
+    © 2026 Maison Dorée · Tous droits réservés<br>
+    <a href="/cdn-cgi/l/email-protection#660b160913050d070000070f14031526010b070f0a4805090b"><span class="__cf_email__" data-cfemail="6508150a10060e040303040c170016250208040c094b060a08">[email&#160;protected]</span></a>
+  </div>
+
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-nav">
+    <div class="hamburger" id="hamburgerBtn" style="cursor:pointer">
+      <span></span><span></span><span style="width:14px"></span>
+    </div>
+    <div class="theme-toggle" id="themeToggle" title="Mode nuit/jour">
+      <svg id="themeIcon" viewBox="0 0 24 24" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-tag">✦ Premium</div>
+    <h1 class="hero-title">Menu<em>Gastronomique</em></h1>
+    <p class="hero-subtitle">Découvrez nos créations culinaires raffinées, inspirées des quatre saisons.</p>
+  </div>
+
+
+</div>
+
+<!-- WHITE SECTION -->
+<div class="white-section">
+
+  <!-- Search Row -->
+  <div class="search-row">
+    <div class="search-input">
+      <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="Rechercher un plat..." autocomplete="off">
+    </div>
+    <div class="filter-btn" id="filterBtn" title="Filtrer">
+      <svg viewBox="0 0 24 24" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+    </div>
+  </div>
+
+  <!-- Menu Header -->
+  <div class="section-header">
+    <h2 class="section-title">Menu</h2>
+    <div class="tabs">
+      <span class="tab active" data-tab="Tous">Tous</span><span class="tab" data-tab="Entrées">Entrées</span>
+      <span class="tab" data-tab="Plats">Plats</span>
+      <span class="tab" data-tab="Desserts">Desserts</span>
+    </div>
+  </div>
+
+  <!-- Cards Scroll -->
+  <div class="cards-scroll">
+
+    <div class="card" data-category="entree" data-price="12500" onclick="openOrderPage('Salade Printanière','Légumes du marché, vinaigrette au citron et herbes fraîches. Un mélange printanier léger et rafraîchissant.','12 500','https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80','Entrée')">
+      <div class="card-img-wrap">
+        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80" alt="Salade Printanière">
+        
+        <button class="card-fav" onclick="event.stopPropagation();toggleFav(this,'Salade Printanière','12 500 FCFA','https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80')" title="Favoris"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Salade Printanière</div>
+        <div class="card-sub">Légumes du marché</div>
+        <div class="card-footer">
+          <div class="card-price">12 500 FCFA</div>
+          <span class="btn-commander">Commander</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-category="poisson" data-price="18000" onclick="openOrderPage('Morue Dorée','Filet de morue poché, beurre citronné aux câpres, accompagné de légumes de saison.','18 000','https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=800&q=80','Poisson')">
+      <div class="card-img-wrap">
+        <img src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=400&q=80" alt="Morue Dorée">
+        
+        <button class="card-fav" onclick="event.stopPropagation();toggleFav(this,'Morue Dorée','18 000 FCFA','https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=400&q=80')" title="Favoris"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Morue Dorée</div>
+        <div class="card-sub">Beurre citronné</div>
+        <div class="card-footer">
+          <div class="card-price">18 000 FCFA</div>
+          <span class="btn-commander">Commander</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-category="viande" data-price="15500" onclick="openOrderPage('Poulet Fumé','Poulet fermier fumé au bois de hickory, sauce aux herbes fraîches et purée de patate douce.','15 500','https://images.unsplash.com/photo-1529042410759-befb1204b468?w=800&q=80','Viande')">
+      <div class="card-img-wrap">
+        <img src="https://images.unsplash.com/photo-1529042410759-befb1204b468?w=400&q=80" alt="Poulet Fumé">
+        
+        <button class="card-fav" onclick="event.stopPropagation();toggleFav(this,'Poulet Fumé','15 500 FCFA','https://images.unsplash.com/photo-1529042410759-befb1204b468?w=400&q=80')" title="Favoris"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Poulet Fumé</div>
+        <div class="card-sub">Sauce aux herbes</div>
+        <div class="card-footer">
+          <div class="card-price">15 500 FCFA</div>
+          <span class="btn-commander">Commander</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-category="plat" data-price="22000" onclick="openOrderPage('Risotto Truffe','Risotto crémeux à la truffe noire, parmesan affiné 24 mois et huile de truffe blanche.','22 000','https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=800&q=80','Plat')">
+      <div class="card-img-wrap">
+        <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=400&q=80" alt="Risotto Truffe">
+        
+        <button class="card-fav" onclick="event.stopPropagation();toggleFav(this,'Risotto Truffe','22 000 FCFA','https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=400&q=80')" title="Favoris"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Risotto Truffe</div>
+        <div class="card-sub">Parmesan affiné</div>
+        <div class="card-footer">
+          <div class="card-price">22 000 FCFA</div>
+          <span class="btn-commander">Commander</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Chef Banner -->
+  <div class="chef-banner">
+    <img class="chef-avatar" src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=200&q=80" alt="Chef">
+    <div class="chef-info">
+      <div class="chef-meta">
+        ⭐ Chef du mois
+        <span style="font-size:14px">🏆</span>
+      </div>
+      <div class="chef-name">Chef Antoine Diallo</div>
+      <div class="chef-desc">Cours privés disponibles</div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+      <div class="chef-time">17h00 → 21h00</div>
+      <div class="chef-cta">Réserver</div>
+    </div>
+  </div>
+
+  <!-- Specials -->
+  <div class="section-header">
+    <h2 class="section-title">Spécialités</h2>
+    <span class="tab" style="color:var(--gold);font-weight:500;cursor:pointer" onclick="openPage('categories'); document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active')); document.querySelector('[data-page=categories]')?.classList.add('active')">Voir tout →</span>
+  </div>
+  <div class="specials-grid">
+
+    <div class="special-card" data-price="19500" data-category="viande" onclick="openOrderPage('Tartare Bœuf','Tartare de bœuf haché au couteau, câpres, cornichons, moutarde de Dijon et jaune d\'œuf.','19 500','https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&q=80','Viande')">
+      <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=400&q=80" alt="Tartare Bœuf">
+      <div class="special-body">
+        <div class="special-name">Tartare Bœuf</div>
+        <div class="special-price">19 500 FCFA</div>
+      </div>
+    </div>
+
+    <div class="special-card" data-price="8500" data-category="dessert" onclick="openOrderPage('Tarte Tatin','Tarte Tatin revisitée aux pommes caramélisées, crème fraîche fouettée à la vanille Bourbon.','8 500','https://images.unsplash.com/photo-1488477181946-6428a0291777?w=800&q=80','Dessert')">
+      <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&q=80" alt="Tarte Tatin">
+      <div class="special-body">
+        <div class="special-name">Tarte Tatin</div>
+        <div class="special-price">8 500 FCFA</div>
+      </div>
+    </div>
+
+    <div class="special-card" data-price="7000" data-category="entree" onclick="openOrderPage('Soupe Épicée','Velouté de courge butternut aux épices douces, crème de coco et chips de gingembre.','7 000','https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=800&q=80','Entrée')">
+      <img src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=400&q=80" alt="Soupe Épicée">
+      <div class="special-body">
+        <div class="special-name">Soupe Épicée</div>
+        <div class="special-price">7 000 FCFA</div>
+      </div>
+    </div>
+
+    <div class="special-card" data-price="35000" data-category="viande" onclick="openOrderPage('Côte de Bœuf','Côte de bœuf maturée 45 jours, grillée au feu de bois, sauce au poivre vert et gratin dauphinois.','35 000','https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800&q=80','Spécialité')">
+      <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&q=80" alt="Côte de Bœuf">
+      <div class="special-body">
+        <div class="special-name">Côte de Bœuf</div>
+        <div class="special-price">35 000 FCFA</div>
+      </div>
+    </div>
+
+    <div class="special-card" data-price="24000" data-category="poisson" onclick="openOrderPage('Gambas Grillées','Gambas royales grillées au beurre d\'ail et citron vert, servies avec un riz basmati safrané.','24 000','https://images.unsplash.com/photo-1519984388953-d2406bc725e1?w=800&q=80','Poisson')">
+      <img src="https://images.unsplash.com/photo-1519984388953-d2406bc725e1?w=400&q=80" alt="Gambas Grillées">
+      <div class="special-body">
+        <div class="special-name">Gambas Grillées</div>
+        <div class="special-price">24 000 FCFA</div>
+      </div>
+    </div>
+
+    <div class="special-card" data-price="6500" data-category="dessert" onclick="openOrderPage('Fondant Chocolat','Fondant au chocolat noir 70% coulant, glace vanille de Madagascar et éclats de pralin.','6 500','https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800&q=80','Dessert')">
+      <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&q=80" alt="Fondant Chocolat">
+      <div class="special-body">
+        <div class="special-name">Fondant Chocolat</div>
+        <div class="special-price">6 500 FCFA</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- PAGE COMMANDE -->
+<div class="order-page" id="orderPage">
+  <div class="order-hero">
+    <img id="orderImg" src="" alt="">
+    <div class="order-hero-overlay"></div>
+    <div class="order-back" onclick="closeOrderPage()">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </div>
+    <div class="order-hero-badge" id="orderBadge">Plat</div>
+    <div class="order-hero-title">
+      <h2 id="orderName"></h2>
+      <p id="orderSub"></p>
+    </div>
+  </div>
+
+  <div class="order-body">
+
+    <!-- Meta -->
+    <div class="order-meta-row">
+      <div class="order-rating">
+        <span class="stars">★★★★★</span>
+        <span>4.8</span>
+      </div>
+      <div class="order-tag-pill">🕐 25–35 min</div>
+      <div class="order-tag-pill">👨‍🍳 Chef Antoine</div>
+    </div>
+
+    <!-- Description -->
+    <p class="order-description" id="orderDesc"></p>
+
+    <!-- Options / Cuisson -->
+    <div class="order-section-title">Cuisson</div>
+    <div class="options-list">
+      <div class="option-item selected" onclick="selectOption(this)">
+        <div class="option-left">
+          <div class="option-check"></div>
+          <div>
+            <div class="option-label">À point</div>
+            <div class="option-desc">Cuisson recommandée par le chef</div>
+          </div>
+        </div>
+        <div class="option-price">Inclus</div>
+      </div>
+      <div class="option-item" onclick="selectOption(this)">
+        <div class="option-left">
+          <div class="option-check"></div>
+          <div>
+            <div class="option-label">Bien cuit</div>
+            <div class="option-desc">Cuisson prolongée</div>
+          </div>
+        </div>
+        <div class="option-price">Inclus</div>
+      </div>
+      <div class="option-item" onclick="selectOption(this)">
+        <div class="option-left">
+          <div class="option-check"></div>
+          <div>
+            <div class="option-label">Saignant</div>
+            <div class="option-desc">Pour les amateurs de goût intense</div>
+          </div>
+        </div>
+        <div class="option-price">Inclus</div>
+      </div>
+    </div>
+
+    <!-- Quantité -->
+    <div class="order-section-title">Quantité</div>
+    <div class="qty-row">
+      <span class="qty-label">Nombre de portions</span>
+      <div class="qty-controls">
+        <button class="qty-btn" onclick="changeQty(-1)">−</button>
+        <span class="qty-value" id="qtyValue">1</span>
+        <button class="qty-btn" onclick="changeQty(1)">+</button>
+      </div>
+    </div>
+
+    <!-- Note spéciale -->
+    <div class="order-section-title">Note spéciale</div>
+    <textarea class="note-input" id="orderNote" rows="3" placeholder="Allergies, préférences, instructions particulières..."></textarea>
+
+  </div>
+</div>
+
+<!-- BARRE BAS COMMANDE -->
+<div class="order-summary-bar" id="orderSummaryBar">
+  <div class="summary-row">
+    <span class="summary-label">Total estimé</span>
+    <span class="summary-total" id="summaryTotal">— FCFA</span>
+  </div>
+  <div style="display:flex;gap:10px">
+    <button class="btn-confirm" style="flex:1;background:var(--gold);color:var(--dark)" onclick="addToCart()">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      Panier
+    </button>
+    <button class="btn-confirm" style="flex:2" onclick="confirmOrder()">
+      <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      Commander
+    </button>
+  </div>
+</div>
+
+<!-- TOAST commande -->
+<div class="toast" id="toast"><span>🎉</span> Commande enregistrée !</div>
+
+<!-- TOAST panier -->
+<div class="toast" id="cartToast" style="bottom:100px"><span>🛒</span> Ajouté au panier !</div>
+
+<!-- INDICATEUR SYNC SERVEUR -->
+<div id="syncIndicator" style="position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.75);color:white;font-size:12px;padding:6px 16px;border-radius:50px;z-index:999;opacity:0;transition:opacity 0.4s;pointer-events:none;white-space:nowrap"></div>
+
+<!-- PAGE FAVORIS -->
+<div class="inner-page" id="pageFavoris">
+  <div class="page-header">
+    <div class="page-title">Mes Favoris</div>
+  </div>
+  <div class="fav-grid" id="favGrid">
+    <div class="empty-state" style="grid-column:1/-1">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <p>Aucun favori pour l'instant.<br>Appuyez sur ❤ sur un plat pour l'ajouter.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE CATÉGORIES -->
+<div class="inner-page" id="pageCategories">
+
+  <!-- Hero -->
+  <div class="cat-hero">
+    <div class="cat-hero-label">✦ Maison Dorée</div>
+    <h2 class="cat-hero-title">Toutes nos<br><em>Créations</em></h2>
+    <p class="cat-hero-sub">Menu complet · Spécialités · Saison</p>
+  </div>
+
+  <!-- Filtres -->
+  <div class="cat-filters">
+    <button class="cat-filter-pill active" data-cat="all">Tout</button>
+    <button class="cat-filter-pill" data-cat="entree">🥗 Entrées</button>
+    <button class="cat-filter-pill" data-cat="poisson">🐟 Poisson</button>
+    <button class="cat-filter-pill" data-cat="viande">🥩 Viande</button>
+    <button class="cat-filter-pill" data-cat="plat">🍽️ Plats</button>
+    <button class="cat-filter-pill" data-cat="dessert">🍰 Desserts</button>
+    <button class="cat-filter-pill" data-cat="specialite">⭐ Spécialités</button>
+  </div>
+
+  <!-- Section : Menu du moment -->
+  <div class="cat-section-label" data-section="menu">Menu du moment</div>
+  <div class="cat-grid" id="catGrid">
+
+    <div class="cat-card" data-cat="entree" onclick="openOrderPage('Salade Printanière','Légumes du marché, vinaigrette au citron et herbes fraîches. Un mélange printanier léger et rafraîchissant.','12 500','https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80','Entrée')">
+      <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80" alt="Salade Printanière">
+      <button class="cat-card-fav" onclick="event.stopPropagation();toggleFav(this,'Salade Printanière','12 500 FCFA','https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      <div class="cat-card-body">
+        <div class="cat-card-badge">Entrée</div>
+        <div class="cat-card-name">Salade Printanière</div>
+        <div class="cat-card-price">12 500 FCFA</div>
+      </div>
+    </div>
+
+    <div class="cat-card" data-cat="poisson" onclick="openOrderPage('Morue Dorée','Filet de morue poché, beurre citronné aux câpres, accompagné de légumes de saison.','18 000','https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=800&q=80','Poisson')">
+      <img src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=400&q=80" alt="Morue Dorée">
+      <button class="cat-card-fav" onclick="event.stopPropagation();toggleFav(this,'Morue Dorée','18 000 FCFA','https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=400&q=80')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      <div class="cat-card-body">
+        <div class="cat-card-badge">Poisson</div>
+        <div class="cat-card-name">Morue Dorée</div>
+        <div class="cat-card-price">18 000 FCFA</div>
+      </div>
+    </div>
+
+    <div class="cat-card" data-cat="viande" onclick="openOrderPage('Poulet Fumé','Poulet fermier fumé au bois de hickory, sauce aux herbes fraîches et purée de patate douce.','15 500','https://images.unsplash.com/photo-1529042410759-befb1204b468?w=800&q=80','Viande')">
+      <img src="https://images.unsplash.com/photo-1529042410759-befb1204b468?w=400&q=80" alt="Poulet Fumé">
+      <button class="cat-card-fav" onclick="event.stopPropagation();toggleFav(this,'Poulet Fumé','15 500 FCFA','https://images.unsplash.com/photo-1529042410759-befb1204b468?w=400&q=80')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      <div class="cat-card-body">
+        <div class="cat-card-badge">Viande</div>
+        <div class="cat-card-name">Poulet Fumé</div>
+        <div class="cat-card-price">15 500 FCFA</div>
+      </div>
+    </div>
+
+    <div class="cat-card" data-cat="plat" onclick="openOrderPage('Risotto Truffe','Risotto crémeux à la truffe noire, parmesan affiné 24 mois et huile de truffe blanche.','22 000','https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=800&q=80','Plat')">
+      <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=400&q=80" alt="Risotto Truffe">
+      <button class="cat-card-fav" onclick="event.stopPropagation();toggleFav(this,'Risotto Truffe','22 000 FCFA','https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=400&q=80')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      <div class="cat-card-body">
+        <div class="cat-card-badge">Plat</div>
+        <div class="cat-card-name">Risotto Truffe</div>
+        <div class="cat-card-price">22 000 FCFA</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Section : Spécialité vedette (grande carte) -->
+  <div class="cat-section-label" data-section="specialite">La spécialité du chef</div>
+  <div class="cat-featured" onclick="openOrderPage('Côte de Bœuf','Côte de bœuf maturée 45 jours, grillée au feu de bois, sauce au poivre vert et gratin dauphinois.','35 000','https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800&q=80','Spécialité')">
+    <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800&q=80" alt="Côte de Bœuf">
+    <div class="cat-featured-overlay"></div>
+    <div class="cat-featured-body">
+      <div class="cat-featured-badge">⭐ Spécialité · Viande</div>
+      <div class="cat-featured-name">Côte de Bœuf</div>
+      <div class="cat-featured-footer">
+        <div class="cat-featured-price">35 000 FCFA</div>
+        <button class="cat-featured-btn" onclick="event.stopPropagation();openOrderPage('Côte de Bœuf','Côte de bœuf maturée 45 jours, grillée au feu de bois, sauce au poivre vert et gratin dauphinois.','35 000','https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800&q=80','Spécialité')">Commander →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section : Toutes les spécialités -->
+  <div class="cat-section-label" data-section="specialite">Toutes les spécialités</div>
+  <div class="cat-grid">
+
+    <div class="cat-card" data-cat="specialite" onclick="openOrderPage('Tartare Bœuf','Tartare de bœuf haché au couteau, câpres, cornichons, moutarde de Dijon et jaune d\'œuf.','19 500','https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&q=80','Spécialité')">
+      <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=400&q=80" alt="Tartare Bœuf">
+      <button class="cat-card-fav" onclick="event.stopPropagation();toggleFav(this,'Tartare Bœuf','19 500 FCFA','https://images.unsplash.com/photo-1559847844-5315695dadae?w=400&q=80')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      <div class="cat-card-body">
+        <div class="cat-card-badge">⭐ Spécialité</div>
+        <div class="cat-card-name">Tartare Bœuf</div>
+        <div class="cat-card-price">19 500 FCFA</div>
+      </div>
+    </div>
+
+    <div class="cat-card" data-cat="specialite dessert" onclick="openOrderPage('Tarte Tatin','Tarte Tatin revisitée aux pommes caramélisées, crème fraîche fouettée à la vanille Bourbon.','8 500','https://images.unsplash.com/photo-1488477181946-6428a0291777?w=800&q=80','Dessert')">
+      <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&q=80" alt="Tarte Tatin">
+      <button class="cat-card-fav" onclick="event.stopPropagation();toggleFav(this,'Tarte Tatin','8 500 FCFA','https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&q=80')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      <div class="cat-card-body">
+        <div class="cat-card-badge">⭐ Dessert</div>
+        <div class="cat-card-name">Tarte Tatin</div>
+        <div class="cat-card-price">8 500 FCFA</div>
+      </div>
+    </div>
+
+    <div class="cat-card" data-cat="specialite entree" onclick="openOrderPage('Soupe Épicée','Velouté de courge butternut aux épices douces, crème de coco et chips de gingembre.','7 000','https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=800&q=80','Entrée')">
+      <img src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=400&q=80" alt="Soupe Épicée">
+      <button class="cat-card-fav" onclick="event.stopPropagation();toggleFav(this,'Soupe Épicée','7 000 FCFA','https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=400&q=80')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      <div class="cat-card-body">
+        <div class="cat-card-badge">⭐ Entrée</div>
+        <div class="cat-card-name">Soupe Épicée</div>
+        <div class="cat-card-price">7 000 FCFA</div>
+      </div>
+    </div>
+
+    <div class="cat-card" data-cat="specialite poisson" onclick="openOrderPage('Gambas Grillées','Gambas royales grillées au beurre d\'ail et citron vert, servies avec un riz basmati safrané.','24 000','https://images.unsplash.com/photo-1519984388953-d2406bc725e1?w=800&q=80','Poisson')">
+      <img src="https://images.unsplash.com/photo-1519984388953-d2406bc725e1?w=400&q=80" alt="Gambas Grillées">
+      <button class="cat-card-fav" onclick="event.stopPropagation();toggleFav(this,'Gambas Grillées','24 000 FCFA','https://images.unsplash.com/photo-1519984388953-d2406bc725e1?w=400&q=80')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      <div class="cat-card-body">
+        <div class="cat-card-badge">⭐ Poisson</div>
+        <div class="cat-card-name">Gambas Grillées</div>
+        <div class="cat-card-price">24 000 FCFA</div>
+      </div>
+    </div>
+
+    <div class="cat-card" data-cat="specialite dessert" onclick="openOrderPage('Fondant Chocolat','Fondant au chocolat noir 70% coulant, glace vanille de Madagascar et éclats de pralin.','6 500','https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800&q=80','Dessert')">
+      <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&q=80" alt="Fondant Chocolat">
+      <button class="cat-card-fav" onclick="event.stopPropagation();toggleFav(this,'Fondant Chocolat','6 500 FCFA','https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&q=80')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      <div class="cat-card-body">
+        <div class="cat-card-badge">⭐ Dessert</div>
+        <div class="cat-card-name">Fondant Chocolat</div>
+        <div class="cat-card-price">6 500 FCFA</div>
+      </div>
+    </div>
+
+    <div class="cat-card" data-cat="specialite viande" onclick="openOrderPage('Côte de Bœuf','Côte de bœuf maturée 45 jours, grillée au feu de bois, sauce au poivre vert et gratin dauphinois.','35 000','https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800&q=80','Spécialité')">
+      <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&q=80" alt="Côte de Bœuf">
+      <button class="cat-card-fav" onclick="event.stopPropagation();toggleFav(this,'Côte de Bœuf','35 000 FCFA','https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400&q=80')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      <div class="cat-card-body">
+        <div class="cat-card-badge">⭐ Viande</div>
+        <div class="cat-card-name">Côte de Bœuf</div>
+        <div class="cat-card-price">35 000 FCFA</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="height:20px"></div>
+</div>
+
+<!-- PAGE COMMANDES -->
+<div class="inner-page" id="pageCommandes">
+  <div class="page-header">
+    <div class="page-title">Mes Commandes</div>
+  </div>
+  <div class="orders-list" id="ordersList">
+    <div class="empty-state">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      <p>Aucune commande pour l'instant.<br>Passez votre première commande !</p>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE PANIER -->
+<div class="inner-page" id="pagePanier">
+  <div class="page-header">
+    <div class="page-title">Mon Panier</div>
+    <button onclick="clearCart()" style="font-size:11px;padding:6px 14px;border:1.5px solid #E8E8E4;border-radius:50px;background:transparent;cursor:pointer;color:var(--gray);font-family:'DM Sans',sans-serif">Vider</button>
+  </div>
+  <div id="cartList" style="padding:16px 20px"></div>
+  <div id="cartFooter" style="display:none;position:sticky;bottom:0;background:var(--white);padding:16px 20px 24px;border-top:1px solid #EFEFEB">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <span style="font-size:14px;color:var(--gray)">Total panier</span>
+      <span id="cartTotal" style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--dark)"></span>
+    </div>
+    <button onclick="checkoutCart()" style="width:100%;padding:16px;background:var(--dark);color:white;border:none;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      Confirmer la commande
+    </button>
+  </div>
+</div>
+
+<!-- FILTER MODAL -->
+<div class="modal-overlay" id="filterModal">
+  <div class="filter-modal">
+    <h3>Filtrer les plats</h3>
+    <div class="filter-section-label">Catégorie</div>
+    <div class="filter-tags">
+      <div class="filter-tag active" data-filter="all">Tous</div>
+      <div class="filter-tag" data-filter="entree">Entrées</div>
+      <div class="filter-tag" data-filter="plat">Plats</div>
+      <div class="filter-tag" data-filter="dessert">Desserts</div>
+      <div class="filter-tag" data-filter="viande">Viande</div>
+      <div class="filter-tag" data-filter="poisson">Poisson</div>
+    </div>
+    <div class="filter-section-label">Prix</div>
+    <div class="filter-tags">
+      <div class="filter-tag active" data-price="all">Tous les prix</div>
+      <div class="filter-tag" data-price="low">Moins de 10 000</div>
+      <div class="filter-tag" data-price="mid">10 000 – 20 000</div>
+    </div>
+    <button class="filter-apply" id="filterApply">Appliquer les filtres</button>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <div class="nav-item active" data-page="home">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+    Accueil
+  </div>
+  <div class="nav-item" data-page="categories">
+    <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+    Catégories
+  </div>
+  <div class="nav-center" data-page="panier" style="position:relative;cursor:pointer">
+    <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+    <span class="nav-badge" id="cartBadge" style="top:-4px;right:-4px"></span>
+  </div>
+  <div class="nav-item" data-page="favoris">
+    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    Favoris
+  </div>
+  <div class="nav-item" data-page="commandes">
+    <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+    <span class="nav-badge" id="ordersBadge"></span>
+    Commandes
+  </div>
+</nav>
+
+<script>
+  // ═══════════════════════════════════════════════════════
+  // ── STORAGE KEYS ──
+  // ═══════════════════════════════════════════════════════
+  const LS_CART      = 'maisonDoree_cart';
+  const LS_FAVORITES = 'maisonDoree_favorites';
+  const LS_ORDERS    = 'maisonDoree_orders';
+  const LS_THEME     = 'maisonDoree_theme';
+
+  // ── Helpers LocalStorage ──
+  function lsGet(key, fallback = []) {
+    try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
+    catch { return fallback; }
+  }
+  function lsSet(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch(e) { console.warn('LS write error', e); }
+  }
+
+  // ═══════════════════════════════════════════════════════
+  // ── SYNC SERVER (simulation via IndexedDB en mémoire) ──
+  //    En production : remplacer serverSync par fetch() vers votre API REST
+  // ═══════════════════════════════════════════════════════
+  const SERVER_DB = { orders: [], favorites: [] }; // simulation in-memory
+
+  async function serverSync(endpoint, payload) {
+    // Simule un POST vers /api/{endpoint} avec un délai réseau
+    return new Promise(resolve => {
+      setTimeout(() => {
+        if (endpoint === 'orders') SERVER_DB.orders = [...payload];
+        if (endpoint === 'favorites') SERVER_DB.favorites = [...payload];
+        resolve({ ok: true, timestamp: new Date().toISOString() });
+      }, 300);
+    });
+  }
+
+  function showSyncStatus(ok) {
+    const indicator = document.getElementById('syncIndicator');
+    if (!indicator) return;
+    indicator.textContent = ok ? '✅ Synchronisé' : '⚠️ Hors ligne';
+    indicator.style.opacity = '1';
+    setTimeout(() => { indicator.style.opacity = '0'; }, 2500);
+  }
+
+  // ═══════════════════════════════════════════════════════
+  // ── PANIER (Cart) ──
+  // ═══════════════════════════════════════════════════════
+  let cart = lsGet(LS_CART, []);
+
+  function saveCart() { lsSet(LS_CART, cart); updateCartBadge(); }
+
+  function renderCart() {
+    const list = document.getElementById('cartList');
+    const footer = document.getElementById('cartFooter');
+    const totalEl = document.getElementById('cartTotal');
+    if (!list) return;
+
+    if (cart.length === 0) {
+      list.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" stroke="#DDD" stroke-width="1.5"/><line x1="3" y1="6" x2="21" y2="6" stroke="#DDD" stroke-width="1.5"/><path d="M16 10a4 4 0 0 1-8 0" stroke="#DDD" stroke-width="1.5"/></svg><p>Votre panier est vide.<br>Ajoutez des plats depuis le menu !</p></div>';
+      footer.style.display = 'none';
+      return;
+    }
+
+    let grandTotal = 0;
+    list.innerHTML = cart.map(item => {
+      const price = parseInt((item.price || '0').replace(/\s/g, '').replace('FCFA','').trim()) || 0;
+      const lineTotal = price * item.qty;
+      grandTotal += lineTotal;
+      return `
+      <div class="order-item" style="margin-bottom:12px">
+        <img class="order-img" src="${item.img}" alt="${item.name}">
+        <div class="order-info" style="flex:1">
+          <div class="order-name">${item.name}</div>
+          <div class="order-meta">${item.badge || ''}</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
+            <button onclick="cartChangeQty('${item.name}',-1)" style="width:26px;height:26px;border-radius:50%;border:1.5px solid #E8E8E4;background:transparent;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center">−</button>
+            <span style="font-size:13px;font-weight:500">${item.qty}</span>
+            <button onclick="cartChangeQty('${item.name}',1)" style="width:26px;height:26px;border-radius:50%;border:1.5px solid #E8E8E4;background:transparent;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <div class="order-price">${lineTotal.toLocaleString('fr-FR')} FCFA</div>
+          <button onclick="removeFromCart('${item.name}')" style="font-size:10px;color:var(--gray);background:transparent;border:none;cursor:pointer">✕ Retirer</button>
+        </div>
+      </div>`;
+    }).join('');
+
+    totalEl.textContent = grandTotal.toLocaleString('fr-FR') + ' FCFA';
+    footer.style.display = 'block';
+  }
+
+  function cartChangeQty(name, delta) {
+    const idx = cart.findIndex(c => c.name === name);
+    if (idx === -1) return;
+    cart[idx].qty = Math.max(1, cart[idx].qty + delta);
+    saveCart();
+    renderCart();
+  }
+
+  function removeFromCart(name) {
+    cart = cart.filter(c => c.name !== name);
+    saveCart();
+    renderCart();
+  }
+
+  function clearCart() {
+    if (cart.length === 0) return;
+    if (!confirm('Vider le panier ?')) return;
+    cart = [];
+    saveCart();
+    renderCart();
+  }
+
+  function checkoutCart() {
+    if (cart.length === 0) return;
+    cart.forEach(item => {
+      const price = parseInt((item.price || '0').replace(/\s/g, '').replace('FCFA','').trim()) || 0;
+      const total = (price * item.qty).toLocaleString('fr-FR') + ' FCFA';
+      addOrder(item.name, item.img, item.qty, total);
+    });
+    cart = [];
+    saveCart();
+    renderCart();
+    // Retour à l'accueil
+    document.querySelectorAll('.inner-page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelector('[data-page="home"]').classList.add('active');
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+
+  function updateCartBadge() {
+    const badge = document.getElementById('cartBadge');
+    const total = cart.reduce((s, i) => s + i.qty, 0);
+    if (badge) { badge.textContent = total; badge.classList.toggle('show', total > 0); }
+  }
+
+  // ═══════════════════════════════════════════════════════
+  // ── FAVORIS ──
+  // ═══════════════════════════════════════════════════════
+  let favorites = lsGet(LS_FAVORITES, []);
+
+  function toggleFav(btn, name, price, img) {
+    const idx = favorites.findIndex(f => f.name === name);
+    if (idx === -1) {
+      favorites.push({ name, price, img });
+      btn.classList.add('active');
+    } else {
+      favorites.splice(idx, 1);
+      btn.classList.remove('active');
+    }
+    lsSet(LS_FAVORITES, favorites);
+    renderFavs();
+    serverSync('favorites', favorites).then(r => showSyncStatus(r.ok));
+  }
+
+  function removeFav(name) {
+    const card = document.querySelector(`.fav-card[data-name]`);
+    // Trouver la carte par son attribut data-name
+    const cards = document.querySelectorAll('.fav-card');
+    let targetCard = null;
+    cards.forEach(c => { if (c.dataset.name === name) targetCard = c; });
+    if (targetCard) {
+      targetCard.classList.add('removing');
+      setTimeout(() => {
+        favorites = favorites.filter(f => f.name !== name);
+        lsSet(LS_FAVORITES, favorites);
+        document.querySelectorAll('.card-fav, .cat-card-fav').forEach(btn => {
+          const oc = btn.getAttribute('onclick') || '';
+          if (oc.includes("'" + name + "'")) btn.classList.remove('active');
+        });
+        renderFavs();
+        serverSync('favorites', favorites).then(r => showSyncStatus(r.ok));
+      }, 300);
+    }
+  }
+
+  function renderFavs() {
+    const grid = document.getElementById('favGrid');
+    if (!grid) return;
+    if (favorites.length === 0) {
+      grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><svg viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg><p>Aucun favori pour l\'instant.<br>Appuyez sur ❤ sur un plat pour l\'ajouter.</p></div>';
+      return;
+    }
+    grid.innerHTML = favorites.map(f => {
+      const safeName = f.name.replace(/'/g, "\'");
+      const safePrice = f.price.replace(' FCFA', '').replace(/'/g, "\'");
+      return `<div class="fav-card" data-name="${f.name.replace(/"/g,'&quot;')}" onclick="openOrderPage('${safeName}','','${safePrice}','${f.img}','')">
+        <div class="fav-card-wrap">
+          <img src="${f.img}" alt="${f.name}">
+          <button class="fav-remove-btn" onclick="event.stopPropagation();removeFav('${safeName}')" title="Retirer des favoris">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+        </div>
+        <div class="fav-card-info">
+          <div class="fav-card-name">${f.name}</div>
+          <div class="fav-card-price">${f.price}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // Restaure l'état visuel des boutons favoris au chargement
+  function restoreFavButtons() {
+    document.querySelectorAll('.card-fav, .cat-card-fav').forEach(btn => {
+      const onclick = btn.getAttribute('onclick') || '';
+      const match = onclick.match(/toggleFav\(this,'([^']+)'/);
+      if (match) {
+        const name = match[1];
+        if (favorites.find(f => f.name === name)) btn.classList.add('active');
+      }
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════
+  // ── COMMANDES ──
+  // ═══════════════════════════════════════════════════════
+  let orders = lsGet(LS_ORDERS, []);
+
+  function addOrder(name, img, qty, total) {
+    const now = new Date();
+    const heure = now.getHours().toString().padStart(2,'0') + 'h' + now.getMinutes().toString().padStart(2,'0');
+    const order = { id: Date.now(), name, img, qty, total, heure, date: now.toLocaleDateString('fr-FR'), status: 'pending' };
+    orders.unshift(order);
+    lsSet(LS_ORDERS, orders);
+    renderOrders();
+    updateOrderBadge();
+    serverSync('orders', orders).then(r => showSyncStatus(r.ok));
+  }
+
+  function renderOrders() {
+    const list = document.getElementById('ordersList');
+    if (!list) return;
+    if (orders.length === 0) {
+      list.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><p>Aucune commande pour l\'instant.<br>Passez votre première commande !</p></div>';
+      return;
+    }
+    list.innerHTML = orders.map(o => `
+      <div class="order-item">
+        <img class="order-img" src="${o.img}" alt="${o.name}">
+        <div class="order-info">
+          <div class="order-name">${o.name}</div>
+          <div class="order-meta">Qté: ${o.qty} · ${o.heure}${o.date ? ' · ' + o.date : ''}</div>
+          <span class="order-status ${o.status === 'done' ? 'done' : 'pending'}">${o.status === 'done' ? '✅ Livré' : '⏳ En cours'}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <div class="order-price">${o.total}</div>
+          ${o.status !== 'done' ? `<button onclick="markOrderDone(${o.id})" style="font-size:10px;padding:4px 10px;border:none;border-radius:50px;background:var(--dark);color:white;cursor:pointer">Marquer livré</button>` : ''}
+        </div>
+      </div>`).join('');
+  }
+
+  function markOrderDone(id) {
+    const o = orders.find(o => o.id === id);
+    if (o) {
+      o.status = 'done';
+      lsSet(LS_ORDERS, orders);
+      renderOrders();
+      updateOrderBadge();
+      serverSync('orders', orders).then(r => showSyncStatus(r.ok));
+    }
+  }
+
+  function updateOrderBadge() {
+    const badge = document.getElementById('ordersBadge');
+    const pending = orders.filter(o => o.status === 'pending').length;
+    if (badge) { badge.textContent = pending; badge.classList.toggle('show', pending > 0); }
+  }
+
+  // ═══════════════════════════════════════════════════════
+  // ── TAB SWITCHING ──
+  // ═══════════════════════════════════════════════════════
+  // ── ONGLETS MENU (Entrées / Plats / Desserts) ──
+  const tabCatMap = {
+    'Tous':    null,
+    'Entrées':  ['entree'],
+    'Plats':    ['plat', 'viande', 'poisson'],
+    'Desserts': ['dessert']
+  };
+
+  let activeTab = null; // null = tous les onglets
+
+  document.querySelectorAll('.tabs .tab[data-tab]').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tabs .tab[data-tab]').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      activeTab = tabCatMap[tab.dataset.tab] || null;
+      applyAllFilters();
+    });
+  });
+
+  // ── NAVIGATION PAGES ──
+  function openPage(page) {
+    document.querySelectorAll('.inner-page').forEach(p => p.classList.remove('active'));
+    if (page === 'favoris')    { document.getElementById('pageFavoris').classList.add('active'); renderFavs(); }
+    else if (page === 'commandes')  document.getElementById('pageCommandes').classList.add('active');
+    else if (page === 'panier')     { document.getElementById('pagePanier').classList.add('active'); renderCart(); }
+    else if (page === 'categories') { document.getElementById('pageCategories').classList.add('active'); initCatFilters(); }
+  }
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      item.classList.add('active');
+      openPage(item.dataset.page);
+    });
+  });
+
+  // Bouton panier central (nav-center)
+  document.querySelector('.nav-center').addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    openPage('panier');
+  });
+
+  // ── FILTRES CATÉGORIES ──
+  function initCatFilters() {
+    document.querySelectorAll('.cat-filter-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.cat-filter-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        const cat = pill.dataset.cat;
+        filterCatCards(cat);
+      });
+    });
+  }
+
+  function filterCatCards(cat) {
+    const cards = document.querySelectorAll('#pageCategories .cat-card');
+    const sections = document.querySelectorAll('#pageCategories .cat-section-label');
+    const featured = document.querySelector('.cat-featured');
+
+    cards.forEach(card => {
+      const cardCats = card.dataset.cat || '';
+      card.style.display = (cat === 'all' || cardCats.includes(cat)) ? '' : 'none';
+    });
+
+    // Afficher/masquer la carte featured selon filtre
+    if (featured) {
+      const showFeatured = cat === 'all' || cat === 'viande' || cat === 'specialite';
+      featured.style.display = showFeatured ? '' : 'none';
+    }
+
+    // Masquer les labels de section si aucune carte visible dessous
+    sections.forEach(label => {
+      const sectionCat = label.dataset.section;
+      if (cat === 'all') { label.style.display = ''; return; }
+      if (sectionCat === 'menu') {
+        const menuCards = document.querySelectorAll('#catGrid .cat-card');
+        const anyVisible = [...menuCards].some(c => c.style.display !== 'none');
+        label.style.display = anyVisible ? '' : 'none';
+      } else if (sectionCat === 'specialite') {
+        label.style.display = (cat === 'specialite' || cat === 'all' || cat === 'viande' || cat === 'dessert' || cat === 'poisson' || cat === 'entree') ? '' : 'none';
+      }
+    });
+  }
+
+  // ── SEARCH ──
+  const searchInput = document.getElementById('searchInput');
+  searchInput.addEventListener('input', () => applyAllFilters());
+
+  // ── FILTRE MODAL ──
+  const filterBtn   = document.getElementById('filterBtn');
+  const filterModal = document.getElementById('filterModal');
+  const filterApply = document.getElementById('filterApply');
+  filterBtn.addEventListener('click', () => filterModal.classList.add('open'));
+  filterModal.addEventListener('click', e => { if (e.target === filterModal) filterModal.classList.remove('open'); });
+
+  let activeFilterCat   = 'all';
+  let activeFilterPrice = 'all';
+
+  document.querySelectorAll('.filter-tag[data-filter]').forEach(tag => {
+    tag.addEventListener('click', () => {
+      document.querySelectorAll('.filter-tag[data-filter]').forEach(t => t.classList.remove('active'));
+      tag.classList.add('active');
+      activeFilterCat = tag.dataset.filter;
+    });
+  });
+  document.querySelectorAll('.filter-tag[data-price]').forEach(tag => {
+    tag.addEventListener('click', () => {
+      document.querySelectorAll('.filter-tag[data-price]').forEach(t => t.classList.remove('active'));
+      tag.classList.add('active');
+      activeFilterPrice = tag.dataset.price;
+    });
+  });
+
+  filterApply.addEventListener('click', () => {
+    filterModal.classList.remove('open');
+    applyAllFilters();
+  });
+
+  // ── FONCTION UNIFIÉE : onglet + catégorie + prix + recherche ──
+  function applyAllFilters() {
+    const query = searchInput.value.toLowerCase().trim();
+
+    document.querySelectorAll('.cards-scroll .card').forEach(card => {
+      const cat   = card.dataset.category || '';
+      const price = parseInt(card.dataset.price || '0');
+      const tabOk    = !activeTab || activeTab.includes(cat);
+      const catOk    = activeFilterCat === 'all' || cat === activeFilterCat;
+      const priceOk  = checkPrice(price);
+      const name     = card.querySelector('.card-name')?.textContent.toLowerCase() || '';
+      const sub      = card.querySelector('.card-sub')?.textContent.toLowerCase()  || '';
+      const searchOk = !query || name.includes(query) || sub.includes(query);
+      card.style.display = (tabOk && catOk && priceOk && searchOk) ? '' : 'none';
+    });
+
+    document.querySelectorAll('.specials-grid .special-card').forEach(card => {
+      const cat   = card.dataset.category || '';
+      const price = parseInt(card.dataset.price || '0');
+      const tabOk    = !activeTab || activeTab.includes(cat);
+      const catOk    = activeFilterCat === 'all' || cat === activeFilterCat;
+      const priceOk  = checkPrice(price);
+      const name     = card.querySelector('.special-name')?.textContent.toLowerCase() || '';
+      const searchOk = !query || name.includes(query);
+      card.style.display = (tabOk && catOk && priceOk && searchOk) ? '' : 'none';
+    });
+  }
+
+  function checkPrice(price) {
+    if (activeFilterPrice === 'low')  return price < 10000;
+    if (activeFilterPrice === 'mid')  return price >= 10000 && price <= 20000;
+    return true; // 'all'
+  }
+
+  // ── HAMBURGER / DRAWER ──
+  function openDrawer()  { document.getElementById('drawer').classList.add('open'); document.getElementById('drawerOverlay').classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeDrawer() { document.getElementById('drawer').classList.remove('open'); document.getElementById('drawerOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+  document.getElementById('hamburgerBtn').addEventListener('click', openDrawer);
+
+  // ═══════════════════════════════════════════════════════
+  // ── PAGE COMMANDE ──
+  // ═══════════════════════════════════════════════════════
+  let basePrice  = 0;
+  let extraPrice = 0;
+  let qty        = 1;
+  let currentItem = null; // pour panier
+
+  function openOrderPage(name, desc, price, img, badge) {
+    basePrice  = parseInt(price.replace(/\s/g, ''));
+    extraPrice = 0;
+    qty        = 1;
+    currentItem = { name, desc, price, img, badge };
+
+    // Pré-remplir depuis le panier si déjà ajouté
+    const inCart = cart.find(c => c.name === name);
+    if (inCart) qty = inCart.qty;
+
+    document.getElementById('orderName').textContent  = name;
+    document.getElementById('orderSub').textContent   = badge + ' · Maison Dorée';
+    document.getElementById('orderDesc').textContent  = desc;
+    document.getElementById('orderImg').src           = img;
+    document.getElementById('orderBadge').textContent = badge;
+    document.getElementById('qtyValue').textContent   = qty;
+
+    document.querySelectorAll('.option-item').forEach((el, i) => el.classList.toggle('selected', i === 0));
+    updateTotal();
+
+    const page = document.getElementById('orderPage');
+    page.style.display = 'block';
+    requestAnimationFrame(() => {
+      page.classList.add('open');
+      document.getElementById('orderSummaryBar').classList.add('visible');
+    });
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeOrderPage() {
+    const page = document.getElementById('orderPage');
+    page.classList.remove('open');
+    document.getElementById('orderSummaryBar').classList.remove('visible');
+    document.getElementById('orderNote').value = '';
+    document.body.style.overflow = '';
+    setTimeout(() => { page.style.display = 'none'; }, 450);
+  }
+
+  function selectOption(el) {
+    document.querySelectorAll('.option-item').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+    extraPrice = parseInt(el.dataset.extra) || 0;
+    updateTotal();
+  }
+
+  function changeQty(delta) {
+    qty = Math.max(1, qty + delta);
+    document.getElementById('qtyValue').textContent = qty;
+    updateTotal();
+    // Mise à jour panier en temps réel
+    if (currentItem) {
+      const idx = cart.findIndex(c => c.name === currentItem.name);
+      if (idx !== -1) { cart[idx].qty = qty; saveCart(); }
+    }
+  }
+
+  function updateTotal() {
+    const total = (basePrice + extraPrice) * qty;
+    document.getElementById('summaryTotal').textContent = total.toLocaleString('fr-FR') + ' FCFA';
+  }
+
+  // ── Ajouter au panier (sans commander) ──
+  function addToCart() {
+    if (!currentItem) return;
+    const total = (basePrice + extraPrice) * qty;
+    const idx = cart.findIndex(c => c.name === currentItem.name);
+    if (idx !== -1) {
+      cart[idx].qty   = qty;
+      cart[idx].total = total.toLocaleString('fr-FR') + ' FCFA';
+    } else {
+      cart.push({ ...currentItem, qty, total: total.toLocaleString('fr-FR') + ' FCFA' });
+    }
+    saveCart();
+    closeOrderPage();
+    showCartToast();
+  }
+
+  function showCartToast() {
+    const t = document.getElementById('cartToast');
+    if (!t) return;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  }
+
+  // ═══════════════════════════════════════════════════════
+  // ── ENVOI COMMANDE (WhatsApp / Email) ──
+  // ═══════════════════════════════════════════════════════
+  const WA_NUMBER = '242068652120';
+  const EMAIL     = 'mpouckaffaires@gmail.com';
+
+  let _pendingOrderItems = []; // items à enregistrer après envoi
+
+  function buildOrderMessage(items) {
+    const now = new Date();
+    const date = now.toLocaleDateString('fr-FR');
+    const heure = now.getHours().toString().padStart(2,'0') + 'h' + now.getMinutes().toString().padStart(2,'0');
+    let msg = `🍽️ *NOUVELLE COMMANDE — Maison Dorée*\n`;
+    msg += `📅 ${date} à ${heure}\n`;
+    msg += `─────────────────────\n`;
+    let grandTotal = 0;
+    items.forEach(item => {
+      const price = parseInt((item.price || item.total || '0').replace(/\s/g,'').replace('FCFA','')) || 0;
+      const lineTotal = item.qty ? price * item.qty : price;
+      grandTotal += lineTotal;
+      msg += `▸ ${item.name}  ×${item.qty || 1}  →  ${lineTotal.toLocaleString('fr-FR')} FCFA\n`;
+    });
+    msg += `─────────────────────\n`;
+    msg += `💰 *TOTAL : ${grandTotal.toLocaleString('fr-FR')} FCFA*\n`;
+    // Notes spéciales
+    const notes = items.filter(i => i.note).map(i => items.length > 1 ? `${i.name} : ${i.note}` : i.note);
+    if (notes.length > 0) {
+      msg += `\n📝 *Note :* ${notes.join(' | ')}\n`;
+    }
+    msg += `\nMerci de confirmer la disponibilité. 🙏`;
+    return msg;
+  }
+
+  function sendViaWhatsApp(msg) {
+    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  }
+
+  function sendViaEmail(msg) {
+    const now = new Date();
+    const subject = encodeURIComponent(`Commande Maison Dorée — ${now.toLocaleDateString('fr-FR')}`);
+    const body    = encodeURIComponent(msg);
+    // Tente d'ouvrir le client mail local
+    const mailtoUrl = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
+    const a = document.createElement('a');
+    a.href = mailtoUrl; a.target = '_blank'; a.rel = 'noopener';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    // Après 800 ms, ouvre aussi Gmail Web en fallback
+    setTimeout(() => {
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(EMAIL)}&su=${subject}&body=${body}`;
+      window.open(gmailUrl, '_blank');
+    }, 800);
+  }
+
+  function openSendModal(items) {
+    _pendingOrderItems = items;
+    const msg = buildOrderMessage(items);
+    document.getElementById('sendPreview').textContent = msg;
+    document.getElementById('sendModal').classList.add('open');
+  }
+
+  function closeSendModal() {
+    document.getElementById('sendModal').classList.remove('open');
+  }
+
+  function sendOrder(channel) {
+    const msg = buildOrderMessage(_pendingOrderItems);
+
+    // Enregistrer dans l'historique
+    _pendingOrderItems.forEach(item => {
+      const price = parseInt((item.price || '0').replace(/\s/g,'').replace('FCFA','')) || 0;
+      const total = item.qty ? (price * item.qty).toLocaleString('fr-FR') + ' FCFA' : item.total;
+      addOrder(item.name, item.img, item.qty || 1, total);
+    });
+
+    // Vider le panier
+    if (_pendingOrderItems.length > 1) { cart = []; saveCart(); renderCart(); }
+    else {
+      cart = cart.filter(c => c.name !== _pendingOrderItems[0]?.name);
+      saveCart();
+    }
+
+    closeSendModal();
+    closeOrderPage();
+
+    // Naviguer vers accueil
+    document.querySelectorAll('.inner-page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelector('[data-page="home"]')?.classList.add('active');
+
+    if (channel === 'whatsapp') sendViaWhatsApp(msg);
+    else sendViaEmail(msg);
+  }
+
+  // ── CONFIRMER COMMANDE (plat unique) ──
+  function confirmOrder() {
+    const name  = document.getElementById('orderName').textContent;
+    const total = document.getElementById('summaryTotal').textContent;
+    const img   = document.getElementById('orderImg').src;
+    const price = String(basePrice + extraPrice);
+    const note  = document.getElementById('orderNote').value.trim();
+    openSendModal([{ name, img, qty, price, total, note }]);
+  }
+
+  // ── CHECKOUT PANIER ──
+  function checkoutCart() {
+    if (cart.length === 0) return;
+    openSendModal([...cart]);
+  }
+
+  // ═══════════════════════════════════════════════════════
+  // ── THÈME ──
+  // ═══════════════════════════════════════════════════════
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon   = document.getElementById('themeIcon');
+  let isNight = lsGet(LS_THEME, false);
+
+  function applyTheme(night) {
+    document.body.classList.toggle('night-mode', night);
+    themeIcon.innerHTML = night
+      ? '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>'
+      : '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  }
+
+  applyTheme(isNight);
+  themeToggle.addEventListener('click', () => {
+    isNight = !isNight;
+    applyTheme(isNight);
+    lsSet(LS_THEME, isNight);
+  });
+
+  // ═══════════════════════════════════════════════════════
+  // ── INIT AU CHARGEMENT ──
+  // ═══════════════════════════════════════════════════════
+  document.addEventListener('DOMContentLoaded', () => {
+    restoreFavButtons();
+    renderFavs();
+    renderOrders();
+    updateOrderBadge();
+    updateCartBadge();
+  });
+</script>
+
+
+<!-- MODALE ENVOI COMMANDE -->
+<div class="modal-overlay" id="sendModal">
+  <div class="filter-modal" style="padding:28px 20px 36px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600">Envoyer la commande</h3>
+      <div onclick="closeSendModal()" style="cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:#F2F2EE">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </div>
+    </div>
+    <div style="background:#F7F7F3;border-radius:14px;padding:14px;margin-bottom:22px;max-height:180px;overflow-y:auto">
+      <pre id="sendPreview" style="font-family:'DM Sans',sans-serif;font-size:12px;line-height:1.7;white-space:pre-wrap;color:#444;margin:0"></pre>
+    </div>
+    <p style="font-size:12px;color:var(--gray);margin-bottom:16px;text-align:center">Choisissez comment envoyer votre commande</p>
+    <div style="display:flex;gap:12px">
+      <button onclick="sendOrder('whatsapp')" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 10px;border:2px solid #25D366;border-radius:18px;background:transparent;cursor:pointer;transition:background 0.2s" onmouseover="this.style.background='#25D36615'" onmouseout="this.style.background='transparent'">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="#25D366">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M11.998 2C6.477 2 2.004 6.473 2.004 11.994c0 1.95.526 3.775 1.443 5.34L2 22l4.797-1.426A9.953 9.953 0 0 0 12 21.99c5.521 0 9.994-4.473 9.994-9.994C21.994 6.475 17.52 2 11.998 2zm0 18.354a8.327 8.327 0 0 1-4.249-1.162l-.304-.18-3.152.937.892-3.073-.198-.315A8.314 8.314 0 0 1 3.686 12c0-4.586 3.727-8.314 8.312-8.314 4.586 0 8.312 3.728 8.312 8.314 0 4.587-3.726 8.354-8.312 8.354z"/>
+        </svg>
+        <span style="font-size:13px;font-weight:500;color:#25D366">WhatsApp</span>
+        <span style="font-size:10px;color:var(--gray)">+242 068 652 120</span>
+      </button>
+      <button onclick="sendOrder('email')" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 10px;border:2px solid var(--gold);border-radius:18px;background:transparent;cursor:pointer;transition:background 0.2s" onmouseover="this.style.background='#C9A84C15'" onmouseout="this.style.background='transparent'">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.8">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        <span style="font-size:13px;font-weight:500;color:var(--gold)">Email</span>
+        <span style="font-size:10px;color:var(--gray);text-align:center">mpouckaffaires<br>@gmail.com</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
